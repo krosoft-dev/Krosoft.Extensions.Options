@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.4.4.1286" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Krosoft.Extensions.Options\Krosoft.Extensions.Options.csproj" />
+  </ItemGroup>
+</Project>
