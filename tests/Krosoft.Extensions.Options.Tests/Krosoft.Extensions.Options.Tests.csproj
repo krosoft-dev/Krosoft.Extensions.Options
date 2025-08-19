@@ -3,7 +3,7 @@
 		<PackageReference Include="JetBrains.Annotations" Version="2025.2.0" />
 		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.5.13.1513" />
 		<PackageReference Include="FluentValidation" Version="12.0.0" />
-		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
 	</ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Krosoft.Extensions.Options\Krosoft.Extensions.Options.csproj" />
