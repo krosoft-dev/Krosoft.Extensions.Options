@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<ItemGroup>
 		<PackageReference Include="JetBrains.Annotations" Version="2025.2.2" />
-		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.10.4.3456" />
+		<PackageReference Include="Krosoft.Extensions.Testing" Version="2025.10.15.3732" />
 		<PackageReference Include="FluentValidation" Version="12.0.0" />
 		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
 	</ItemGroup>
