@@ -2,13 +2,20 @@
 	<PropertyGroup>
 		<PackageTags>Krosoft Extension Options Helper Extensions</PackageTags>
 		<Description>Classes de base, extensions et helpers pour simplifier l'utilisation des options.</Description>
-		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net10.0'">
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.15" />
 		<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.15" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.15" />
 		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.15" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net11.0'">
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="11.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" Version="11.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="11.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="11.0.0" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="FluentValidation" Version="12.2.0" />
 	</ItemGroup>
 </Project>
