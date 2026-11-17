@@ -86,6 +86,30 @@ public class SettingsValidateOptionsTests : BaseTest
              .WithMessage("'Base Url' ne doit pas être vide.");
     }
 
+    [TestMethod]
+    public void IOptions_ValidateurScoped_NeProvoquePasDeDependanceCaptive()
+    {
+        var configuration = new ConfigurationBuilder()
+                            .AddInMemoryCollection(new Dictionary<string, string?>
+                            {
+                                [$"{nameof(MySettings)}:{nameof(MySettings.Token)}"] = "MyToken",
+                                [$"{nameof(MySettings)}:{nameof(MySettings.BaseUrl)}"] = "https://api.com"
+                            })
+                            .Build();
+        var services = new ServiceCollection();
+        services.AddOptionsValidator<MySettings, MySettingsValidateOptions>(configuration)
+                .AddScoped<IValidator<MySettings>, MySettingsValidator>();
+
+        using var serviceProvider = services.BuildServiceProvider(new ServiceProviderOptions
+        {
+            ValidateScopes = true,
+            ValidateOnBuild = true
+        });
+        var options = serviceProvider.GetRequiredService<IOptions<MySettings>>();
+
+        Check.That(options.Value.BaseUrl).IsEqualTo("https://api.com");
+    }
+
     protected override void AddServices(IServiceCollection services, IConfiguration configuration)
     {
         services.AddOptionsValidator<MySettings, MySettingsValidateOptions>(configuration)

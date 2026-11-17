@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Krosoft.Extensions.Options.Services;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -19,6 +20,7 @@ public static class ServiceCollectionExtensions
                 .ValidateOnStart();
 
         return services
-            .AddSingleton<IValidateOptions<TSettings>, TValidateOptions>();
+               .AddTransient<TValidateOptions>()
+               .AddSingleton<IValidateOptions<TSettings>, ScopedValidateOptions<TSettings, TValidateOptions>>();
     }
 }
