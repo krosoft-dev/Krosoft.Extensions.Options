@@ -25,6 +25,31 @@ public class ServiceCollectionExtensionsTests : BaseTest
         Check.That(_options.Value.Password).IsEqualTo("world");
     }
 
+    [TestMethod]
+    public void AddOptionsValidator_SansClasseDeValidation_RetourneLesOptions()
+    {
+        var options = BuildOptions(new Dictionary<string, string?>
+        {
+            [$"{nameof(SampleSettings)}:{nameof(SampleSettings.BaseUrl)}"] = "https://api.com",
+            [$"{nameof(SampleSettings)}:{nameof(SampleSettings.Username)}"] = "hello",
+            [$"{nameof(SampleSettings)}:{nameof(SampleSettings.Password)}"] = "world"
+        });
+
+        Check.That(options.Value.Username).IsEqualTo("hello");
+    }
+
+    [TestMethod]
+    public void AddOptionsValidator_SansClasseDeValidation_LeveUneErreurSiInvalide()
+    {
+        var options = BuildOptions(new Dictionary<string, string?>
+        {
+            [$"{nameof(SampleSettings)}:{nameof(SampleSettings.BaseUrl)}"] = "https://api.com"
+        });
+
+        Check.ThatCode(() => options.Value)
+             .Throws<OptionsValidationException>();
+    }
+
     [TestInitialize]
     public void SetUp()
     {
@@ -36,6 +61,21 @@ public class ServiceCollectionExtensionsTests : BaseTest
     {
         services.AddValidatorsFromAssemblies([typeof(ServiceCollectionExtensionsTests).Assembly], includeInternalTypes: true);
         services.AddOptionsValidator<SampleSettings, SampleSettingsValidateOptions>(configuration);
+    }
+
+    private static IOptions<SampleSettings> BuildOptions(Dictionary<string, string?> values)
+    {
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(values).Build();
+        var services = new ServiceCollection();
+        services.AddOptionsValidator<SampleSettings>(configuration)
+                .AddScoped<IValidator<SampleSettings>, SampleSettingsValidator>();
+
+        var serviceProvider = services.BuildServiceProvider(new ServiceProviderOptions
+        {
+            ValidateScopes = true,
+            ValidateOnBuild = true
+        });
+        return serviceProvider.GetRequiredService<IOptions<SampleSettings>>();
     }
 
     public record SampleSettings

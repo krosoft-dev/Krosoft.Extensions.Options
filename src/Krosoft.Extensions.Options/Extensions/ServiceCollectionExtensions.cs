@@ -7,6 +7,11 @@ namespace Krosoft.Extensions.Options.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    public static IServiceCollection AddOptionsValidator<TSettings>(this IServiceCollection services,
+                                                                    IConfiguration configuration)
+        where TSettings : class
+        => services.AddOptionsValidator<TSettings, FluentValidationValidateOptions<TSettings>>(configuration);
+
     public static IServiceCollection AddOptionsValidator<TSettings, TValidateOptions>(this IServiceCollection services,
                                                                                       IConfiguration configuration)
         where TSettings : class
